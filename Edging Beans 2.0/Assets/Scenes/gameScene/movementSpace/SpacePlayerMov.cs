@@ -14,7 +14,7 @@ public class SpacePlayerMov : MonoBehaviour
 
     [Header("Gravity")]
     public float gravity = -3f * 2f;
-    public float jumpHeight = 2f;
+    public float jumpHeight = 1.5f;
     public bool continousJump = true;
     public float inAirResistance = 0.6f;
 
