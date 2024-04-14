@@ -23,9 +23,16 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") && CountDone)
+        if (Input.GetButtonDown("Cancel") && CountDone && optionOpen == false && optionsTab.CompareTag("gameScene"))
         {
             toggleMenu();
+        }
+        else if (Input.GetButtonDown("Cancel") && CountDone && optionOpen && optionsTab.CompareTag("gameScene"))
+        {
+            optionsTab.SetActive(false);
+            optionOpen = false;
+            toggleMenu();
+            
         }
     }
 
