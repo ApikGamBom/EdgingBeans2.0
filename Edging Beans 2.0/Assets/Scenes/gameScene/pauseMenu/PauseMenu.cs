@@ -3,21 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public static bool isPaused = false;
+    public GameObject optionsTab;
+    public float UiDelay = 3f;
+    public TextMeshProUGUI countdownText;
+    public GameObject CountdownObj;
+    public bool CountDone;
+    public bool optionOpen = false;
 
     void Start()
     {
-        pauseMenu.SetActive(false);
-        
+
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && CountDone)
         {
             toggleMenu();
         }
@@ -25,45 +31,61 @@ public class PauseMenu : MonoBehaviour
 
     public void toggleMenu()
     {
-        if (isPaused)
+        StartCoroutine(ToggleUi());
+    }
+
+    public IEnumerator ToggleUi()
+    {
+        float remainingTime = UiDelay;
+
+        if (isPaused == true && optionOpen == false)
         {
-            ResumeGame();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            pauseMenu.SetActive(false);
+            CountDone = false;
+            CountdownObj.SetActive(true);
+            while (remainingTime > 0)
+            {
+                countdownText.text = Mathf.Ceil(remainingTime).ToString();
+                yield return new WaitForSecondsRealtime(1);
+                remainingTime -= 1;
+            }
+            Time.timeScale = 1f;
+            CountDone = true;
+            CountdownObj.SetActive(false);
+            countdownText.text = "";
         }
-        else
+        else if (isPaused == false && optionOpen == false)
         {
-            PauseGame();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
+        isPaused = !isPaused;
+        CountDone = true;
     }
 
-    public void PauseGame()
+    public void OptionsToggle()
     {
-        pauseMenu.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    public void ResumeGame()
-    {
-        pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void GoToOptions()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Options");
+        optionsTab.SetActive(!optionsTab.activeSelf);
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
+        optionOpen = !optionOpen;
     }
 
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainScene");
+    }
+    public void GoToGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("GameScene");
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
