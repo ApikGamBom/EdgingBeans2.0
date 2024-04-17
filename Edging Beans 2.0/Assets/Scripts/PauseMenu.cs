@@ -26,10 +26,6 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        Vector3 directionToTarget = targetPosition.position - transform.position;
-        float angle = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
-        compassNeedle.rectTransform.rotation = Quaternion.Euler(0, 0, -angle);
-
         if (Input.GetButtonDown("Cancel") && CountDone && optionOpen == false && optionsTab.CompareTag("gameScene"))
         {
             toggleMenu();
