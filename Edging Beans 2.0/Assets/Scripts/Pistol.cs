@@ -20,8 +20,8 @@ public class Pistol : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, Range))
         {
-            Debug.Log(hit.transform.name);
             Debug.Log("Shoot!");
+            Debug.Log(hit.transform.name);
         }
         
     }

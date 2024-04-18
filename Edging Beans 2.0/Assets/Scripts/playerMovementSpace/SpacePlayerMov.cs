@@ -7,12 +7,17 @@ using UnityEngine.UIElements;
 
 public class SpacePlayerMov : MonoBehaviour
 {
+
+    #region Variables
+
     [Header("Movement")]
     public Transform playerPosition;
     public CharacterController controller;
     public float speed = 4f;
     public float sprint = 1.5f;
 
+    [Header("Dashing")]
+    public Camera Camera;
     public float w_time = 0;
     public float a_time = 0;
     public float s_time = 0;
@@ -30,6 +35,8 @@ public class SpacePlayerMov : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
+    #endregion
+
     Vector3 velocity;
     void Update()
     {
@@ -44,7 +51,8 @@ public class SpacePlayerMov : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-        Vector3 null_ = transform.right + transform.forward;
+
+        #region Basic Movement with sprint
 
         if (Input.GetKey(KeyCode.LeftShift)) //detects for shift key pressed
         {
@@ -68,6 +76,8 @@ public class SpacePlayerMov : MonoBehaviour
                 //Debug.Log("Walking in air!")
             }
         }
+
+        #endregion
 
         #region wasd input timer
 
@@ -105,10 +115,11 @@ public class SpacePlayerMov : MonoBehaviour
 
         #endregion
 
+        //Dashing
         if(Input.GetKeyDown(KeyCode.V))
         {
             controller.Move(move * 2);
-            //Debug.Log("Dashed!");
+            Debug.Log("Dashed!");
         }
 
         #region Jumping
