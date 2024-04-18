@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class SpacePlayerMov : MonoBehaviour
@@ -11,6 +12,11 @@ public class SpacePlayerMov : MonoBehaviour
     public CharacterController controller;
     public float speed = 4f;
     public float sprint = 1.5f;
+
+    public float w_time = 0;
+    public float a_time = 0;
+    public float s_time = 0;
+    public float d_time = 0;
 
     [Header("Gravity")]
     public float gravity = -3f * 2f;
@@ -38,40 +44,89 @@ public class SpacePlayerMov : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 null_ = transform.right + transform.forward;
 
         if (Input.GetKey(KeyCode.LeftShift)) //detects for shift key pressed
         {
             if (isGrounded)
             {
-                controller.Move(move * speed * Time.deltaTime * sprint); //if shift pressed this happens (player moves twice as fast)
-                Debug.Log("Sprinting!");
+                controller.Move(move * speed * Time.deltaTime * sprint); //if shift pressed this happens (player moves 1.4 as fast)
+                //Debug.Log("Sprinting!");
             } else
             {
-                controller.Move(move * speed * inAirResistance * Time.deltaTime * sprint); //if shift pressed this happens (player moves twice as fast)
-                Debug.Log("Sprinting!");
+                controller.Move(move * speed * inAirResistance * Time.deltaTime * sprint); //if shift pressed this happens (player moves 1.4 as fast)
+                //Debug.Log("Sprinting in air!");
             }
         } else {
             if (isGrounded)
             {
                 controller.Move(move * speed * Time.deltaTime); //if shift not is pressed this happens (plyer moves at default speed wich is in the <speed> variable)
+                //Debug.Log("Walking normal!")
             } else
             {
                 controller.Move(move * speed * inAirResistance * Time.deltaTime); //if shift not is pressed this happens (plyer moves at default speed wich is in the <speed> variable)
+                //Debug.Log("Walking in air!")
             }
         }
+
+        #region wasd input timer
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            w_time += 1;
+        } else
+        {
+            w_time = 0;
+        }
+        
+        if(Input.GetKey(KeyCode.A))
+        {
+            a_time += 1;
+        } else
+        {
+            a_time = 0;
+        }
+        
+        if (Input.GetKey(KeyCode.S))
+        {
+            s_time += 1;
+        } else
+        {
+            s_time = 0;
+        }
+        
+        if((Input.GetKey(KeyCode.D)))
+        {
+            d_time += 1;
+        } else
+        {
+            d_time = 0;
+        }
+
+        #endregion
+
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            controller.Move(move * 2);
+            //Debug.Log("Dashed!");
+        }
+
+        #region Jumping
 
         if (continousJump)
         {
             if (Input.GetKey(KeyCode.Space) && isGrounded)
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                //Debug.Log("Jumping!");
+                //Debug.Log("Jumping continous!");
         } else {
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                //Debug.Log("Jumping!");
+                //Debug.Log("Jumping noncontinous!");
             }
         }
+
+        #endregion
 
         if (Input.GetKey(KeyCode.R))
         {

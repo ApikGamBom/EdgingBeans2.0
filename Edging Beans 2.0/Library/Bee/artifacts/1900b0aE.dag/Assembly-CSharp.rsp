@@ -364,6 +364,7 @@
 "Assets/Scripts/EnemyController.cs"
 "Assets/Scripts/MainMenu.cs"
 "Assets/Scripts/PauseMenu.cs"
+"Assets/Scripts/Pistol.cs"
 "Assets/Scripts/playerMovementSpace/SpaceCameraMov.cs"
 "Assets/Scripts/playerMovementSpace/SpacePlayerMov.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
