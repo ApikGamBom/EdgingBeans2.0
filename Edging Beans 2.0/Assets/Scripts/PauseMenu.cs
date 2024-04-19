@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject CountdownObj;
     public bool CountDone;
     public bool optionOpen = false;
+    public Transform targetPosition;
+    public RawImage  compassNeedle;
 
     void Start()
     {
@@ -23,6 +26,10 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        Vector3 directionToTarget = targetPosition.position - transform.position;
+        float angle = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
+        compassNeedle.rectTransform.rotation = Quaternion.Euler(0, 0, -angle);
+
         if (Input.GetButtonDown("Cancel") && CountDone && optionOpen == false && optionsTab.CompareTag("gameScene"))
         {
             toggleMenu();
