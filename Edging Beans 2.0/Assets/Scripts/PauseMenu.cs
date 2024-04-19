@@ -8,14 +8,22 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    [Header("GameObjects")]
     public GameObject pauseMenu;
-    public static bool isPaused = false;
+    public GameObject Crosshair;
     public GameObject optionsTab;
-    public float UiDelay = 3f;
-    public TextMeshProUGUI countdownText;
     public GameObject CountdownObj;
+
+    [Header("Floats")]
+    public float UiCountdown = 3f;
+
+    [Header("Bools")]
+    public static bool isPaused = false;
     public bool CountDone;
     public bool optionOpen = false;
+
+    [Header("Other")]
+    public TextMeshProUGUI countdownText;
     public Transform targetPosition;
     public RawImage  compassNeedle;
 
@@ -26,10 +34,6 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        Vector3 directionToTarget = targetPosition.position - transform.position;
-        float angle = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
-        compassNeedle.rectTransform.rotation = Quaternion.Euler(0, 0, -angle);
-
         if (Input.GetButtonDown("Cancel") && CountDone && optionOpen == false && optionsTab.CompareTag("gameScene"))
         {
             toggleMenu();
@@ -50,7 +54,7 @@ public class PauseMenu : MonoBehaviour
 
     public IEnumerator ToggleUi()
     {
-        float remainingTime = UiDelay;
+        float remainingTime = UiCountdown;
 
         if (isPaused == true && optionOpen == false)
         {
@@ -68,6 +72,7 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 1f;
             CountDone = true;
             CountdownObj.SetActive(false);
+            Crosshair.SetActive(true);
             countdownText.text = "";
         }
         else if (isPaused == false && optionOpen == false)
@@ -75,6 +80,7 @@ public class PauseMenu : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             pauseMenu.SetActive(true);
+            Crosshair.SetActive(false);
             Time.timeScale = 0f;
         }
         isPaused = !isPaused;
