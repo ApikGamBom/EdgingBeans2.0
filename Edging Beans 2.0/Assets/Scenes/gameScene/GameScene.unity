@@ -2340,15 +2340,19 @@ MonoBehaviour:
   MouseSensInputField: {fileID: 1014439352}
   MouseSensSlider: {fileID: 2109894193}
   MouseSensMaxValue: 5
+  initialMouseSens: 1
   ResumeDelayInputField: {fileID: 61198758}
   ResumeDelaySlider: {fileID: 568318652}
   ResumeDelayMaxValue: 10
+  initialResumeDelay: 2
   MusicVolumeInputField: {fileID: 991623373}
   MusicVolumeSlider: {fileID: 960157855}
   MusicVolumeMaxValue: 100
+  initialMusicVolume: 100
   GameplayVolumeInputField: {fileID: 1725009991}
   GameplayVolumeSlider: {fileID: 1263598067}
   GameplayVolumeMaxValue: 100
+  initialGameplayVolume: 100
 --- !u!1 &435281475
 GameObject:
   m_ObjectHideFlags: 0
@@ -31389,7 +31393,7 @@ Transform:
   m_GameObject: {fileID: 1812559230}
   serializedVersion: 2
   m_LocalRotation: {x: 0.34917116, y: 0.45504877, z: 0.49866816, w: 0.6498771}
-  m_LocalPosition: {x: -0.704, y: 0.298, z: 0.454}
+  m_LocalPosition: {x: -0.65, y: 0.298, z: 0.454}
   m_LocalScale: {x: 0.3, y: 0.6, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -14,24 +14,39 @@ public class SliderControl : MonoBehaviour
     [Header("Mouse Sensitivity")]
     [SerializeField] private TMP_InputField MouseSensInputField;
     [SerializeField] private Slider MouseSensSlider;
-    [SerializeField] private float MouseSensMaxValue = 5;
+    [SerializeField] private float MouseSensMaxValue = 5f;
+    [SerializeField] private float initialMouseSens = 1f;
 
     [Header("Resume Delay")]
     [SerializeField] private TMP_InputField ResumeDelayInputField;
     [SerializeField] private Slider ResumeDelaySlider;
-    [SerializeField] private float ResumeDelayMaxValue = 10;
+    [SerializeField] private float ResumeDelayMaxValue = 10f;
+    [SerializeField] private float initialResumeDelay = 2f;
     
     [Header("Music Volume")]
     [SerializeField] private TMP_InputField MusicVolumeInputField;
     [SerializeField] private Slider MusicVolumeSlider;
-    [SerializeField] private float MusicVolumeMaxValue = 100;
+    [SerializeField] private float MusicVolumeMaxValue = 100f;
+    [SerializeField] private float initialMusicVolume = 100f;
 
     [Header("Gameplay Volume")]
     [SerializeField] private TMP_InputField GameplayVolumeInputField;
     [SerializeField] private Slider GameplayVolumeSlider;
-    [SerializeField] private float GameplayVolumeMaxValue = 100;
+    [SerializeField] private float GameplayVolumeMaxValue = 100f;
+    [SerializeField] private float initialGameplayVolume = 100f;
     void Start()
     {
+        MouseSensSlider.value = initialMouseSens / MouseSensMaxValue;
+        UpdateMouseSense(MouseSensSlider.value);
+
+        ResumeDelaySlider.value = initialResumeDelay / ResumeDelayMaxValue;
+        UpdateResumeDelay(ResumeDelaySlider.value);
+        
+        MusicVolumeSlider.value = initialMusicVolume / MusicVolumeMaxValue;
+        UpdateMusicVolume(MusicVolumeSlider.value);
+
+        GameplayVolumeSlider.value = initialGameplayVolume / GameplayVolumeMaxValue;
+        UpdateGameplayVolume(GameplayVolumeSlider.value);
 
         MouseSensInputField.onEndEdit.AddListener(delegate { ValidateAndSetMouseSens(MouseSensInputField.text); });
         MouseSensSlider.onValueChanged.AddListener(delegate(float value) { UpdateMouseSense(value); });
