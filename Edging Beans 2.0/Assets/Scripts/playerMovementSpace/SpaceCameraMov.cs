@@ -12,6 +12,7 @@ public class SpaceCameraMov : MonoBehaviour
     public float mouseSensetivity = 200f;
     public Transform playerBody;
     float xRotation = 0f;
+    public SliderControl sliderController;
 
   void Start()
     {
@@ -37,8 +38,8 @@ public class SpaceCameraMov : MonoBehaviour
 
         if(alwCamMovement)
         {
-            float MouseX = Input.GetAxis("Mouse X") * mouseSensetivity * 4 * Time.deltaTime;
-            float MouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * 4 * Time.deltaTime;
+            float MouseX = Input.GetAxis("Mouse X") * mouseSensetivity * Time.deltaTime * sliderController.MouseSensValue;
+            float MouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * Time.deltaTime * sliderController.MouseSensValue;
 
             xRotation -= MouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);

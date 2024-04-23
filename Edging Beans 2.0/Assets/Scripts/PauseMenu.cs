@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+
+    [Header("Slid Controller")]
+    public SliderControl sliderController;
+
     [Header("GameObjects")]
     public GameObject pauseMenu;
     public GameObject Crosshair;
@@ -15,7 +19,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject CountdownObj;
 
     [Header("Floats")]
-    public float UiCountdown = 3f;
+    public float UiCountdown;
 
     [Header("Bools")]
     public static bool isPaused = false;
@@ -34,6 +38,8 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        UiCountdown = sliderController.ResumeDelayValue;
+
         if (Input.GetButtonDown("Cancel") && CountDone && optionOpen == false && optionsTab.CompareTag("gameScene"))
         {
             toggleMenu();
@@ -65,9 +71,9 @@ public class PauseMenu : MonoBehaviour
             CountdownObj.SetActive(true);
             while (remainingTime > 0)
             {
-                countdownText.text = Mathf.Ceil(remainingTime).ToString();
-                yield return new WaitForSecondsRealtime(1);
-                remainingTime -= 1;
+                countdownText.text = remainingTime.ToString("F1");
+                yield return new WaitForSecondsRealtime(0.1f);
+                remainingTime -= 0.1f;
             }
             Time.timeScale = 1f;
             CountDone = true;

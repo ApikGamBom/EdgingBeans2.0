@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class SliderControl : MonoBehaviour
 {
     [Header("All")]
-    [SerializeField] private float lowestValue = 0.001f;
-
+    [SerializeField] private float lowestValue = 0.5f;
 
 
     [Header("Mouse Sensitivity")]
@@ -16,24 +15,29 @@ public class SliderControl : MonoBehaviour
     [SerializeField] private Slider MouseSensSlider;
     [SerializeField] private float MouseSensMaxValue = 5f;
     [SerializeField] private float initialMouseSens = 1f;
+    public float MouseSensValue = 1f;
+    
 
     [Header("Resume Delay")]
     [SerializeField] private TMP_InputField ResumeDelayInputField;
     [SerializeField] private Slider ResumeDelaySlider;
     [SerializeField] private float ResumeDelayMaxValue = 10f;
     [SerializeField] private float initialResumeDelay = 2f;
+    public float ResumeDelayValue = 2f;
     
     [Header("Music Volume")]
     [SerializeField] private TMP_InputField MusicVolumeInputField;
     [SerializeField] private Slider MusicVolumeSlider;
     [SerializeField] private float MusicVolumeMaxValue = 100f;
     [SerializeField] private float initialMusicVolume = 100f;
+    public float MusicVolumeValue = 100f;
 
     [Header("Gameplay Volume")]
     [SerializeField] private TMP_InputField GameplayVolumeInputField;
     [SerializeField] private Slider GameplayVolumeSlider;
     [SerializeField] private float GameplayVolumeMaxValue = 100f;
     [SerializeField] private float initialGameplayVolume = 100f;
+    public float GameplayVolumeValue = 100f;
     void Start()
     {
         MouseSensSlider.value = initialMouseSens / MouseSensMaxValue;
@@ -69,6 +73,7 @@ public class SliderControl : MonoBehaviour
     {
         float scaledValue = value * MouseSensMaxValue;
         MouseSensInputField.text = scaledValue.ToString("0.0");
+        MouseSensValue = value * MouseSensMaxValue;
     }
     private void ValidateAndSetMouseSens(string input)
     {
@@ -78,6 +83,7 @@ public class SliderControl : MonoBehaviour
             if (value >= lowestValue && value <= MouseSensMaxValue)
             {
             MouseSensSlider.value = value / MouseSensMaxValue;
+            MouseSensValue = value;
             }
             else
             {
@@ -98,6 +104,7 @@ public class SliderControl : MonoBehaviour
     {
         float scaledValue = value * ResumeDelayMaxValue;
         ResumeDelayInputField.text = scaledValue.ToString("0.0");
+        ResumeDelayValue = value * ResumeDelayMaxValue;
     }
     private void ValidateAndSetResumeDelay(string input)
     {
@@ -107,6 +114,7 @@ public class SliderControl : MonoBehaviour
             if (value >= lowestValue && value <= ResumeDelayMaxValue)
             {
             ResumeDelaySlider.value = value / ResumeDelayMaxValue;
+            ResumeDelayValue = value;
             }
             else
             {
@@ -125,15 +133,17 @@ public class SliderControl : MonoBehaviour
     {
         float scaledValue = value * MusicVolumeMaxValue;
         MusicVolumeInputField.text = scaledValue.ToString("0.0");
+        MusicVolumeValue = value * MusicVolumeMaxValue;
     }
     private void ValidateAndSetMusicVolume(string input)
     {
 
         if (float.TryParse(input, out float value))
         {
-            if (value >= lowestValue && value <= MusicVolumeMaxValue)
+            if (value <= MusicVolumeMaxValue)
             {
             MusicVolumeSlider.value = value / MusicVolumeMaxValue;
+            MusicVolumeValue = value;
             }
             else
             {
@@ -154,15 +164,17 @@ public class SliderControl : MonoBehaviour
     {
         float scaledValue = value * GameplayVolumeMaxValue;
         GameplayVolumeInputField.text = scaledValue.ToString("0.0");
+        GameplayVolumeValue = value * GameplayVolumeMaxValue;
     }
     private void ValidateAndSetGameplayVolume(string input)
     {
 
         if (float.TryParse(input, out float value))
         {
-            if (value >= lowestValue && value <= GameplayVolumeMaxValue)
+            if (value <= GameplayVolumeMaxValue)
             {
             GameplayVolumeSlider.value = value / GameplayVolumeMaxValue;
+            GameplayVolumeValue = value;
             }
             else
             {
