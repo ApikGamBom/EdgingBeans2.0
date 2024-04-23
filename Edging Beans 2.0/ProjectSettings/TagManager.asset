@@ -6,6 +6,7 @@ TagManager:
   tags:
   - normBtn
   - gameScene
+  - ground
   layers:
   - Default
   - TransparentFX
