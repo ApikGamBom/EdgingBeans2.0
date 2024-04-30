@@ -4,8 +4,9 @@ public class Pistol : MonoBehaviour
 {
     public float Damage = 10f;
     public float Range = 100f;
+    RaycastHit hit;
     
-    public Camera Camera;
+    public GameObject pistolBarrel;
 
     void Update()
     {
@@ -20,8 +21,7 @@ public class Pistol : MonoBehaviour
 
     void Shoot()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, Range))
+        if (Physics.Raycast(pistolBarrel.transform.position, pistolBarrel.transform.forward, out hit, Range))
         {
             Debug.Log("Shoot!");
             Debug.Log(hit.transform.name);
