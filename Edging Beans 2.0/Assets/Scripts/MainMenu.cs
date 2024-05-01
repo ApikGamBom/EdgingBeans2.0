@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MainMenu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject Crosshair;
     public GameObject optionsTab;
+    public GameObject GameplayTab;
+    public GameObject VolumeTab;
 
     [Header("Floats")]
     public float UiCountdown;
@@ -21,9 +24,6 @@ public class MainMenu : MonoBehaviour
     public static bool isPaused = false;
     public bool CountDone;
     public bool optionOpen = false;
-
-    [Header("Other")]
-    public GameObject mainMenu;
     
     public void Update()
     {
@@ -35,11 +35,26 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void openSettings()
+    public void toggleSettings()
     {
         optionsTab.SetActive(!optionsTab.activeSelf);
         pauseMenu.SetActive(!pauseMenu.activeSelf);
         optionOpen = !optionOpen;
+    }
+    
+    public void OptionsTabSwitch(Button button)
+    {
+        if (button.name == "GameplayBtn")
+        {
+            GameplayTab.SetActive(true);
+            VolumeTab.SetActive(false);
+        }
+        else if (button.name == "VolumeBtn")
+        {
+            GameplayTab.SetActive(false);
+            VolumeTab.SetActive(true);
+        }
+        
     }
 
     public void quitGame()
