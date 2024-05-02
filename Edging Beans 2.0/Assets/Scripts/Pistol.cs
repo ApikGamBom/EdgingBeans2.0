@@ -6,6 +6,7 @@ public class Pistol : MonoBehaviour
     public float Range = 100f;
     
     public Camera Camera;
+    public GameObject bulletSpawnPivot;
 
     void Update()
     {
@@ -21,7 +22,7 @@ public class Pistol : MonoBehaviour
     void Shoot()
     {
         RaycastHit hit;
-        if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, Range))
+        if (Physics.Raycast(bulletSpawnPivot.transform.position, Camera.transform.forward, out hit, Range))
         {
             Debug.Log("Shoot!");
             Debug.Log(hit.transform.name);
