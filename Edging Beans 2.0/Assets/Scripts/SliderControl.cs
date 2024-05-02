@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class SliderControl : MonoBehaviour
 {
     [Header("All")]
-    [SerializeField] private float lowestValue = 0.5f;
-
+    public TMP_Text WarningText;
 
     [Header("Mouse Sensitivity")]
     [SerializeField] private TMP_InputField MouseSensInputField;
@@ -64,11 +63,24 @@ public class SliderControl : MonoBehaviour
         MusicVolumeSlider.onValueChanged.AddListener(delegate(float value) { UpdateMusicVolume(value); });
         UpdateMusicVolume(MusicVolumeSlider.value);
 
-        GameplayVolumeInputField.onEndEdit.AddListener(delegate { ValidateAndSetGameplayVolume(ResumeDelayInputField.text); });
+        GameplayVolumeInputField.onEndEdit.AddListener(delegate { ValidateAndSetGameplayVolume(GameplayVolumeInputField.text); });
         GameplayVolumeSlider.onValueChanged.AddListener(delegate(float value) { UpdateGameplayVolume(value); });
         UpdateGameplayVolume(GameplayVolumeSlider.value);
     }
 
+    public IEnumerator ClearWarningTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        WarningText.text = "";
+    }
+
+    private void ShowWarning(string message)
+    {
+        WarningText.text = message;
+        StopCoroutine("ClearWarningTextAfterDelay");
+        StartCoroutine(ClearWarningTextAfterDelay(3.0f));
+    }
+    
     public void UpdateMouseSense(float value)
     {
         float scaledValue = value * MouseSensMaxValue;
@@ -80,7 +92,7 @@ public class SliderControl : MonoBehaviour
 
         if (float.TryParse(input, out float value))
         {
-            if (value >= lowestValue && value <= MouseSensMaxValue)
+            if (value <= MouseSensMaxValue)
             {
             MouseSensSlider.value = value / MouseSensMaxValue;
             MouseSensValue = value;
@@ -89,12 +101,14 @@ public class SliderControl : MonoBehaviour
             {
                 Debug.Log("Input out of range");
                 MouseSensInputField.text = (MouseSensSlider.value * MouseSensMaxValue).ToString("0.0");
+                ShowWarning("!Input is out of range!");
             }
         }
         else
         {
             Debug.Log("Invalid input");
             MouseSensInputField.text = (MouseSensSlider.value * MouseSensMaxValue).ToString("0.0");
+            ShowWarning("!Invalid input!");
         }
     }
 
@@ -111,7 +125,7 @@ public class SliderControl : MonoBehaviour
 
         if (float.TryParse(input, out float value))
         {
-            if (value >= lowestValue && value <= ResumeDelayMaxValue)
+            if (value <= ResumeDelayMaxValue)
             {
             ResumeDelaySlider.value = value / ResumeDelayMaxValue;
             ResumeDelayValue = value;
@@ -120,12 +134,14 @@ public class SliderControl : MonoBehaviour
             {
                 Debug.Log("Input out of range");
                 ResumeDelayInputField.text = (ResumeDelaySlider.value * ResumeDelayMaxValue).ToString("0.0");
+                ShowWarning("!Input is out of range!");
             }
         }
         else
         {
             Debug.Log("Invalid input");
             ResumeDelayInputField.text = (ResumeDelaySlider.value * ResumeDelayMaxValue).ToString("0.0");
+            ShowWarning("!Invalid input!");
         }
     }
 
@@ -149,12 +165,14 @@ public class SliderControl : MonoBehaviour
             {
                 Debug.Log("Input out of range");
                 MusicVolumeInputField.text = (MusicVolumeSlider.value * MusicVolumeMaxValue).ToString("0.0");
+                ShowWarning("!Input is out of range!");
             }
         }
         else
         {
             Debug.Log("Invalid input");
             MusicVolumeInputField.text = (MusicVolumeSlider.value * MusicVolumeMaxValue).ToString("0.0");
+            ShowWarning("!Invalid input!");
         }
     }
 
@@ -180,12 +198,14 @@ public class SliderControl : MonoBehaviour
             {
                 Debug.Log("Input out of range");
                 GameplayVolumeInputField.text = (GameplayVolumeSlider.value * GameplayVolumeMaxValue).ToString("0.0");
+                ShowWarning("!Input is out of range!");
             }
         }
         else
         {
             Debug.Log("Invalid input");
             GameplayVolumeInputField.text = (GameplayVolumeSlider.value * GameplayVolumeMaxValue).ToString("0.0");
+            ShowWarning("!Invalid input!");
         }
     }
 }
