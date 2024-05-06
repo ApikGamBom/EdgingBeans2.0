@@ -144,7 +144,7 @@ public class SpacePlayerMov : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                //Debug.Log("Jumping noncontinous!");
+                //Debug.Log("NOT Jumping continous!");
             }
         }
 

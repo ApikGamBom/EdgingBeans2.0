@@ -21,8 +21,8 @@ public class SliderControl : MonoBehaviour
     [SerializeField] private TMP_InputField ResumeDelayInputField;
     [SerializeField] private Slider ResumeDelaySlider;
     [SerializeField] private float ResumeDelayMaxValue = 10f;
-    [SerializeField] private float initialResumeDelay = 2f;
-    public float ResumeDelayValue = 2f;
+    [SerializeField] private float initialResumeDelay = 1f;
+    public float ResumeDelayValue = 1f;
     
     [Header("Music Volume")]
     [SerializeField] private TMP_InputField MusicVolumeInputField;

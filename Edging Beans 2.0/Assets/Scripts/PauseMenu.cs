@@ -19,10 +19,12 @@ public class PauseMenu : MonoBehaviour
     public GameObject CountdownObj;
 
     [Header("Floats")]
-    public float UiCountdown;
+    public float UiCountdown = 1;
+
+    [Header("Static Bools")]
+    public static bool isPaused = false;
 
     [Header("Bools")]
-    public static bool isPaused = false;
     public bool CountDone;
     public bool optionOpen = false;
 
@@ -30,11 +32,6 @@ public class PauseMenu : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public Transform targetPosition;
     public RawImage  compassNeedle;
-
-    void Start()
-    {
-
-    }
 
     void Update()
     {

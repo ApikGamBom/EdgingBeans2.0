@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class playerManager : MonoBehaviour
 {
     #region Singleton
 
-    public static PlayerManager instance;
+    public static playerManager instance;
 
-    void Awake()
+    void Awake ()
     {
         instance = this;
     }

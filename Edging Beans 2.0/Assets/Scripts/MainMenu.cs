@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     public GameObject VolumeTab;
 
     [Header("Floats")]
-    public float UiCountdown;
+    public float UiCountdown = 1f;
 
     [Header("Bools")]
     public static bool isPaused = false;
