@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using System.Threading;
 
 public class SpacePlayerMov : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class SpacePlayerMov : MonoBehaviour
     public CharacterController controller;
     public float speed = 4f;
     public float sprint = 1.5f;
+    //public float jumpTime = 1;
 
     [Header("Dashing")]
     public Camera Camera;
@@ -58,21 +60,21 @@ public class SpacePlayerMov : MonoBehaviour
         {
             if (isGrounded)
             {
-                controller.Move(move * speed * Time.deltaTime * sprint); //if shift pressed this happens (player moves 1.4 as fast)
+                controller.Move(move * speed * Time.deltaTime * sprint); // <* jumpTime> if shift pressed this happens (player moves 1.4 as fast)
                 //Debug.Log("Sprinting!");
             } else
             {
-                controller.Move(move * speed * inAirResistance * Time.deltaTime * sprint); //if shift pressed this happens (player moves 1.4 as fast)
+                controller.Move(move * speed * inAirResistance * Time.deltaTime * sprint); // <* jumpTime> if shift pressed this happens (player moves 1.4 as fast)
                 //Debug.Log("Sprinting in air!");
             }
         } else {
             if (isGrounded)
             {
-                controller.Move(move * speed * Time.deltaTime); //if shift not is pressed this happens (plyer moves at default speed wich is in the <speed> variable)
+                controller.Move(move * speed * Time.deltaTime); // <* jumpTime> if shift not is pressed this happens (plyer moves at default speed wich is in the <speed> variable)
                 //Debug.Log("Walking normal!")
             } else
             {
-                controller.Move(move * speed * inAirResistance * Time.deltaTime); //if shift not is pressed this happens (plyer moves at default speed wich is in the <speed> variable)
+                controller.Move(move * speed * inAirResistance * Time.deltaTime); // <* jumpTime> if shift not is pressed this happens (plyer moves at default speed wich is in the <speed> variable)
                 //Debug.Log("Walking in air!")
             }
         }
@@ -105,21 +107,30 @@ public class SpacePlayerMov : MonoBehaviour
             s_time = 0;
         }
         
-        if((Input.GetKey(KeyCode.D)))
+        if(Input.GetKey(KeyCode.D))
         {
             d_time += 1;
         } else
         {
             d_time = 0;
         }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+            //jumpTime += .001f;
+            //Debug.Log("Jump "+jumpTime);
+            //Thread.Sleep(10); //Setter koden på pause i ".Sleep(x)" milisekunder OBS: må ha øverst i scriptet "using System.Threading;" NB: Stopper også frames, så det blir færre frames i sekundet
+        //}else{
+            //jumpTime = 1;
+        //}
 
         #endregion
 
         //Dashing
-        if(Input.GetKeyDown(KeyCode.V))
+        if(Input.GetKey(KeyCode.V))
         {
-            controller.Move(move * 2);
-            Debug.Log("Dashed!");
+            controller.Move(move * 1.3f);
+            //Debug.Log("Dashed!");
+            //Thread.Sleep(100);
         }
 
         #region Jumping
