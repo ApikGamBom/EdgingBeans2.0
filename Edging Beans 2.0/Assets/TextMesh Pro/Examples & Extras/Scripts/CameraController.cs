@@ -10,9 +10,9 @@ namespace TMPro.Examples
         public enum CameraModes { Follow, Isometric, Free }
 
         private Transform cameraTransform;
-        private Transform dummyTarget;
+        private Transform dummyplayer;
 
-        public Transform CameraTarget;
+        public Transform Cameraplayer;
 
         public float FollowDistance = 30.0f;
         public float MaxFollowDistance = 100.0f;
@@ -68,11 +68,11 @@ namespace TMPro.Examples
         // Use this for initialization
         void Start()
         {
-            if (CameraTarget == null)
+            if (Cameraplayer == null)
             {
-                // If we don't have a target (assigned by the player, create a dummy in the center of the scene).
-                dummyTarget = new GameObject("Camera Target").transform;
-                CameraTarget = dummyTarget;
+                // If we don't have a player (assigned by the player, create a dummy in the center of the scene).
+                dummyplayer = new GameObject("Camera player").transform;
+                Cameraplayer = dummyplayer;
             }
         }
 
@@ -82,16 +82,16 @@ namespace TMPro.Examples
             GetPlayerInput();
 
 
-            // Check if we still have a valid target
-            if (CameraTarget != null)
+            // Check if we still have a valid player
+            if (Cameraplayer != null)
             {
                 if (CameraMode == CameraModes.Isometric)
                 {
-                    desiredPosition = CameraTarget.position + Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * new Vector3(0, 0, -FollowDistance);
+                    desiredPosition = Cameraplayer.position + Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * new Vector3(0, 0, -FollowDistance);
                 }
                 else if (CameraMode == CameraModes.Follow)
                 {
-                    desiredPosition = CameraTarget.position + CameraTarget.TransformDirection(Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * (new Vector3(0, 0, -FollowDistance)));
+                    desiredPosition = Cameraplayer.position + Cameraplayer.TransformDirection(Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * (new Vector3(0, 0, -FollowDistance)));
                 }
                 else
                 {
@@ -111,10 +111,10 @@ namespace TMPro.Examples
                 }
 
                 if (RotationSmoothing == true)
-                    cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, Quaternion.LookRotation(CameraTarget.position - cameraTransform.position), RotationSmoothingValue * Time.deltaTime);
+                    cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, Quaternion.LookRotation(Cameraplayer.position - cameraTransform.position), RotationSmoothingValue * Time.deltaTime);
                 else
                 {
-                    cameraTransform.LookAt(CameraTarget);
+                    cameraTransform.LookAt(Cameraplayer);
                 }
 
             }
@@ -195,7 +195,7 @@ namespace TMPro.Examples
 
                 }
 
-                // Check for left mouse button to select a new CameraTarget or to reset Follow position
+                // Check for left mouse button to select a new Cameraplayer or to reset Follow position
                 if (Input.GetMouseButton(0))
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -203,14 +203,14 @@ namespace TMPro.Examples
 
                     if (Physics.Raycast(ray, out hit, 300, 1 << 10 | 1 << 11 | 1 << 12 | 1 << 14))
                     {
-                        if (hit.transform == CameraTarget)
+                        if (hit.transform == Cameraplayer)
                         {
                             // Reset Follow Position
                             OrbitalAngle = 0;
                         }
                         else
                         {
-                            CameraTarget = hit.transform;
+                            Cameraplayer = hit.transform;
                             OrbitalAngle = 0;
                             MovementSmoothing = previousSmoothing;
                         }
@@ -221,22 +221,22 @@ namespace TMPro.Examples
 
                 if (Input.GetMouseButton(2))
                 {
-                    if (dummyTarget == null)
+                    if (dummyplayer == null)
                     {
-                        // We need a Dummy Target to anchor the Camera
-                        dummyTarget = new GameObject("Camera Target").transform;
-                        dummyTarget.position = CameraTarget.position;
-                        dummyTarget.rotation = CameraTarget.rotation;
-                        CameraTarget = dummyTarget;
+                        // We need a Dummy player to anchor the Camera
+                        dummyplayer = new GameObject("Camera player").transform;
+                        dummyplayer.position = Cameraplayer.position;
+                        dummyplayer.rotation = Cameraplayer.rotation;
+                        Cameraplayer = dummyplayer;
                         previousSmoothing = MovementSmoothing;
                         MovementSmoothing = false;
                     }
-                    else if (dummyTarget != CameraTarget)
+                    else if (dummyplayer != Cameraplayer)
                     {
-                        // Move DummyTarget to CameraTarget
-                        dummyTarget.position = CameraTarget.position;
-                        dummyTarget.rotation = CameraTarget.rotation;
-                        CameraTarget = dummyTarget;
+                        // Move Dummyplayer to Cameraplayer
+                        dummyplayer.position = Cameraplayer.position;
+                        dummyplayer.rotation = Cameraplayer.rotation;
+                        Cameraplayer = dummyplayer;
                         previousSmoothing = MovementSmoothing;
                         MovementSmoothing = false;
                     }
@@ -247,7 +247,7 @@ namespace TMPro.Examples
 
                     moveVector = cameraTransform.TransformDirection(mouseX, mouseY, 0);
 
-                    dummyTarget.Translate(-moveVector, Space.World);
+                    dummyplayer.Translate(-moveVector, Space.World);
 
                 }
 

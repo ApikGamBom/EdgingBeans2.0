@@ -51,7 +51,7 @@ Shader "TextMeshPro/Sprite"
 		CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-            #pragma target 2.0
+            #pragma player 2.0
 
 			#include "UnityCG.cginc"
 			#include "UnityUI.cginc"
@@ -96,7 +96,7 @@ Shader "TextMeshPro/Sprite"
 				return OUT;
 			}
 
-			fixed4 frag(v2f IN) : SV_Target
+			fixed4 frag(v2f IN) : SV_player
 			{
 				half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
 				

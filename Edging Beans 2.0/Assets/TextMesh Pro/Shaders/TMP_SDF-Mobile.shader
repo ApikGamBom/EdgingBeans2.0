@@ -193,7 +193,7 @@ SubShader {
 
 
 		// PIXEL SHADER
-		fixed4 PixShader(pixel_t input) : SV_Target
+		fixed4 PixShader(pixel_t input) : SV_target
 		{
 			UNITY_SETUP_INSTANCE_ID(input);
 

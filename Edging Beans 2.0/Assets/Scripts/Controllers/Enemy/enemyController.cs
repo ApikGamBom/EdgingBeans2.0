@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class enemyController : MonoBehaviour
 {
     public float lookRadius = 10f;
 
     Transform target;
     NavMeshAgent agent;
+
+    public GameObject goal;
 
     void Start ()
     {
@@ -18,6 +20,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update ()
     {
+        agent.SetDestination(goal.transform.position);
         float distance = Vector3.Distance(target.position, transform.position);
 
         if (distance <= lookRadius )
